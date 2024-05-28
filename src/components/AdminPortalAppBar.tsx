@@ -5,7 +5,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Image from 'next/image'
 
-export default function ButtonAppBar() {
+export default function AdminPortalAppBar() {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">

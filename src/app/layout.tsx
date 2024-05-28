@@ -2,7 +2,7 @@ import './globals.css'
 import type { Metadata } from "next";
 import { Source_Code_Pro } from "next/font/google";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
-import ButtonAppBar from "../components/ButtonAppBar";
+import AdminPortalAppBar from "../components/AdminPortalAppBar";
 import { CssBaseline } from "@mui/material";
 
 const sourceCodeProFont = Source_Code_Pro({ subsets: ["latin"] });
@@ -20,7 +20,7 @@ export default function RootLayout({ children }: Readonly<{
       <body>
         <CssBaseline />
         <AppRouterCacheProvider>
-          <ButtonAppBar />
+          <AdminPortalAppBar />
           {/* {children} */}
         </AppRouterCacheProvider>
       </body>
