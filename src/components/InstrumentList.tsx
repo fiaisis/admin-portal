@@ -6,6 +6,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import { Fragment } from 'react';
 import ListSubheader from '@mui/material/ListSubheader';
+import Paper from '@mui/material/Paper';
 
 const instruments = [
     'ALF',
@@ -56,24 +57,26 @@ export default function InstrumentList() {
     return (
         <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
             <nav aria-label="instrument list">
-                <List
-                    subheader={
-                        <ListSubheader component="div" id="nested-list-subheader">
-                            Instruments
-                        </ListSubheader>
-                    }>
-                    < Divider />
-                    {instruments.map((instrumentName) => (
-                        <Fragment key={instrumentName}>
-                            <ListItem disablePadding>
-                                <ListItemButton>
-                                    <ListItemText primary={instrumentName} />
-                                </ListItemButton>
-                            </ListItem>
-                            <Divider component="li" />
-                        </Fragment>
-                    ))}
-                </List>
+                <Paper sx={{ maxHeight: '90vh', overflow: 'auto' }}>
+                    <List
+                        subheader={
+                            <ListSubheader component="div" id="nested-list-subheader">
+                                Instruments
+                            </ListSubheader>
+                        }>
+                        < Divider />
+                        {instruments.map((instrumentName) => (
+                            <Fragment key={instrumentName}>
+                                <ListItem disablePadding>
+                                    <ListItemButton>
+                                        <ListItemText primary={instrumentName} />
+                                    </ListItemButton>
+                                </ListItem>
+                                <Divider component="li" />
+                            </Fragment>
+                        ))}
+                    </List>
+                </Paper>
             </nav>
         </Box >
     );
