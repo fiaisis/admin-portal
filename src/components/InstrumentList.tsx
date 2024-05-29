@@ -5,6 +5,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import { Fragment } from 'react';
+import ListSubheader from '@mui/material/ListSubheader';
 
 const instruments = [
     'ALF',
@@ -55,7 +56,13 @@ export default function InstrumentList() {
     return (
         <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
             <nav aria-label="instrument list">
-                <List>
+                <List
+                    subheader={
+                        <ListSubheader component="div" id="nested-list-subheader">
+                            Instruments
+                        </ListSubheader>
+                    }>
+                    < Divider />
                     {instruments.map((instrumentName) => (
                         <Fragment key={instrumentName}>
                             <ListItem disablePadding>
