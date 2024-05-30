@@ -4,7 +4,6 @@ import { Source_Code_Pro } from "next/font/google";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import AdminPortalAppBar from "../components/AdminPortalAppBar";
 import { CssBaseline } from "@mui/material";
-import InstrumentList from "@/components/InstrumentList";
 
 const sourceCodeProFont = Source_Code_Pro({ subsets: ["latin"] });
 
@@ -24,8 +23,7 @@ export default function RootLayout({
         <CssBaseline />
         <AppRouterCacheProvider>
           <AdminPortalAppBar />
-          <InstrumentList />
-          {/* {children} */}
+          {children}
         </AppRouterCacheProvider>
       </body>
     </html>
