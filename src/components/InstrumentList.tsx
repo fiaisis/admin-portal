@@ -55,9 +55,9 @@ const instruments = [
 
 export default function InstrumentList() {
     return (
-        <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+        <Box sx={{ width: '100%', maxWidth: 360 }}>
             <nav aria-label="instrument list">
-                <Paper sx={{ maxHeight: '90vh', overflow: 'auto' }}>
+                <Paper sx={{ maxHeight: '90vh', overflow: 'auto', width: "20vw",bgcolor: "background.paper"}}>
                     <List
                         subheader={
                             <ListSubheader component="div" id="nested-list-subheader">
