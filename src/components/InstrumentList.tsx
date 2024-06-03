@@ -1,4 +1,3 @@
-import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -55,35 +54,33 @@ const instruments = [
 
 export default function InstrumentList() {
   return (
-    <Box sx={{ width: "100%", maxWidth: 360 }}>
-      <Paper
-        sx={{
-          maxHeight: "90vh",
-          overflow: "auto",
-          width: "20vw",
-          bgcolor: "background.paper",
-        }}
+    <Paper
+      sx={{
+        maxHeight: "90vh",
+        overflow: "auto",
+        // width: "20vw",
+        bgcolor: "background.paper",
+      }}
+    >
+      <List
+        subheader={
+          <ListSubheader component="div" id="nested-list-subheader">
+            Instruments
+          </ListSubheader>
+        }
       >
-        <List
-          subheader={
-            <ListSubheader component="div" id="nested-list-subheader">
-              Instruments
-            </ListSubheader>
-          }
-        >
-          <Divider />
-          {instruments.map((instrumentName) => (
-            <Fragment key={instrumentName}>
-              <ListItem disablePadding>
-                <ListItemButton>
-                  <ListItemText primary={instrumentName} />
-                </ListItemButton>
-              </ListItem>
-              <Divider component="li" />
-            </Fragment>
-          ))}
-        </List>
-      </Paper>
-    </Box>
+        <Divider />
+        {instruments.map((instrumentName) => (
+          <Fragment key={instrumentName}>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemText primary={instrumentName} />
+              </ListItemButton>
+            </ListItem>
+            <Divider component="li" />
+          </Fragment>
+        ))}
+      </List>
+    </Paper>
   );
 }

@@ -12,19 +12,12 @@ export default function specificationEditor() {
         objectFit: "contains",
       }}
     >
-      <InstrumentList />
-      <Box
-        sx={{
-          display: "flex-grow",
-          justifyContent: "right",
-          width: "100%",
-          maxWidth: 100,
-        }}
-      >
+      <Box sx={{ flex: 1 }}>
+        <InstrumentList />
+      </Box>
+      <Box style={{ flex: 4 }}>
         <TextEditor />
       </Box>
     </Box>
   );
-}
-
 }
