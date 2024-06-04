@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { Button } from "@mui/material";
+import { Button, Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
 
 export default function ButtonAlert() {
@@ -10,22 +10,34 @@ export default function ButtonAlert() {
 
   const handleClick = () => {
     setShowAlert(true);
-    // Optional: Automatically hide the alert after a certain period
-    setTimeout(() => {
-      setShowAlert(false);
-    }, 3000); // Hide the alert after 3 seconds
   };
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setShowAlert(false);
+  };
+
   return (
     <div>
       <Button variant="contained" color="primary" onClick={handleClick}>
         Submit
       </Button>
-      {/* if showAlert is true render the alert */}
-      {showAlert && (
-        <Alert severity="success" onClose={() => setShowAlert(false)}>
+      <Snackbar
+        open={showAlert}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+      >
+        <Alert severity="success" onClose={() => handleClose}>
           JSON specification file edited successfully.
         </Alert>
-      )}
+      </Snackbar>
     </div>
   );
 }

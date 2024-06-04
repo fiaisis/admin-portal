@@ -42,7 +42,7 @@ export default function specificationEditor() {
           // height: "90vh",
         }}
       >
-        <ButtonAlert>Submit</ButtonAlert>
+        <ButtonAlert />
       </Box>
     </Fragment>
   );
