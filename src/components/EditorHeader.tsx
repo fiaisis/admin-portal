@@ -11,9 +11,14 @@ export default function EditorHeader() {
         alignItems: "center",
       }}
     >
-      {/* empty Box for padding (evenly space title and button */}
-      <Box></Box>
-      <h1> Title</h1>
+      <Box
+        sx={{
+          flexGrow: 1,
+          textAlign: "center",
+        }}
+      >
+        <h1> Title</h1>
+      </Box>
       <Box
         sx={{
           display: "flex",
