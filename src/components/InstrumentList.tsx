@@ -58,7 +58,6 @@ export default function InstrumentList() {
       sx={{
         maxHeight: "90vh",
         overflow: "auto",
-        // width: "20vw",
         bgcolor: "background.paper",
       }}
     >

@@ -1,5 +1,3 @@
-// attempt at adding button and alert
-
 import InstrumentList from "@/components/InstrumentList";
 import TextEditor from "@/components/TextEditor";
 import { Box } from "@mui/material";
@@ -10,24 +8,18 @@ export default function specificationEditor() {
   return (
     <Fragment>
       <Box
-        //  alternative
-        // {{
-        //   display: "flex",
-        //   height: "90vh",
-        //   width: "100vw",
-        // }}
         sx={{
           display: "flex",
           justifyContent: "center",
           flexDirection: "row",
           objectFit: "contains",
-          height: "90vh",
+          height: "75vh",
         }}
       >
         <Box sx={{ flex: 1 }}>
           <InstrumentList />
         </Box>
-        <Box sx={{ flex: 4 }}>
+        <Box sx={{ flex: 7 }}>
           <EditorHeader></EditorHeader>
           <TextEditor />
         </Box>

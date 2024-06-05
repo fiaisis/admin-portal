@@ -38,10 +38,7 @@ export default function TextEditor() {
   };
 
   return (
-    // height and width to be controlled by parent element and flex
     <Editor
-      // height="90vh"
-      // width="70vw"
       defaultLanguage="json"
       options={options}
       onChange={handleChange}
