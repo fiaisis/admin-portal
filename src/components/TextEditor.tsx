@@ -1,10 +1,42 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
-import Editor from "@monaco-editor/react";
+import Editor, { useMonaco } from "@monaco-editor/react";
 
 export default function TextEditor() {
-  const options = { automaticLayout: true, wordWrap: "on", lineWrap: "on" };
+  const monaco = useMonaco();
+  const editorRef = useRef(null);
+  useEffect(() => {
+    if (monaco) {
+      console.log("monaco instance for making changes pre mount:", monaco);
+    }
+  }, [monaco]);
+  const options = {
+    automaticLayout: true,
+    formatOnPaste: true,
+    lineWrap: "on",
+    wordWrap: "on",
+  };
+
+  // onChange get updated text (JSON), format the code after a 5 second delay
+  const handleChange = () => {
+    const updatedText = editorRef.current.getModel().getValue();
+    console.log(updatedText);
+
+    setTimeout(() => {
+      editorRef.current.getAction("editor.action.formatDocument").run();
+    }, 5000);
+  };
+
+  const handleEditorDidMount = (editor, monaco) => {
+    editorRef.current = editor;
+
+    // Format the initial code on load
+    setTimeout(() => {
+      editor.getAction("editor.action.formatDocument").run();
+    }, 100); // Delay to ensure editor is fully loaded
+  };
+
   return (
     // height and width to be controlled by parent element and flex
     <Editor
@@ -12,6 +44,8 @@ export default function TextEditor() {
       // width="70vw"
       defaultLanguage="json"
       options={options}
+      onChange={handleChange}
+      onMount={handleEditorDidMount}
       defaultValue='[{
   "border": "{{int(1, 5)}}px {{random(solid, dotted, dashed)}} {{color()}}",
   "coordinates": {
