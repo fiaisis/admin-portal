@@ -2,10 +2,9 @@
 
 import InstrumentList from "@/components/InstrumentList";
 import TextEditor from "@/components/TextEditor";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import { Fragment } from "react";
-import Alert from "@mui/material/Alert";
-import ButtonAlert from "@/components/ButtonAlert";
+import EditorHeader from "@/components/EditorHeader";
 
 export default function specificationEditor() {
   return (
@@ -29,20 +28,9 @@ export default function specificationEditor() {
           <InstrumentList />
         </Box>
         <Box sx={{ flex: 4 }}>
+          <EditorHeader></EditorHeader>
           <TextEditor />
         </Box>
-      </Box>
-
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          // flexDirection: "row",
-          // objectFit: "contains",
-          // height: "90vh",
-        }}
-      >
-        <ButtonAlert />
       </Box>
     </Fragment>
   );
