@@ -1,12 +1,15 @@
+"use client";
 import InstrumentList from "@/components/InstrumentList";
 import TextEditor from "@/components/TextEditor";
 import { Box } from "@mui/material";
-import { Fragment } from "react";
+import { useState } from "react";
 import EditorHeader from "@/components/EditorHeader";
 
-export default function specificationEditor() {
+export default function SpecificationEditor() {
+  const [instrument, setInstrument] = useState<string>("ALF");
+
   return (
-    <Fragment>
+    <>
       <Box
         sx={{
           display: "flex",
@@ -17,13 +20,16 @@ export default function specificationEditor() {
         }}
       >
         <Box sx={{ flex: 1 }}>
-          <InstrumentList />
+          <InstrumentList
+            selected={instrument}
+            handleInstrumentChange={setInstrument}
+          />
         </Box>
         <Box sx={{ flex: 7 }}>
           <EditorHeader></EditorHeader>
           <TextEditor />
         </Box>
       </Box>
-    </Fragment>
+    </>
   );
 }

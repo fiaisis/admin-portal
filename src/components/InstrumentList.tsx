@@ -8,7 +8,6 @@ import Divider from "@mui/material/Divider";
 import { Fragment } from "react";
 import ListSubheader from "@mui/material/ListSubheader";
 import Paper from "@mui/material/Paper";
-import { useState } from "react";
 
 const instruments = [
   "ALF",
@@ -55,17 +54,12 @@ const instruments = [
   "ZOOM",
 ];
 
-export default function InstrumentList() {
-  // default to first instrument
-  const [instrument, setInstrument] = useState(instruments[0]);
-  const buttonProps = (value) => ({
-    selected: instrument === instruments[value.index],
-    onClick: () => {
-      value = instruments[value.index];
-      setInstrument(value);
-    },
-  });
+interface InstrumentListProps {
+  selected: string;
+  handleInstrumentChange: (instrument: string) => void;
+}
 
+export default function InstrumentList(props: InstrumentListProps) {
   return (
     <Paper
       sx={{
@@ -82,11 +76,15 @@ export default function InstrumentList() {
         }
       >
         <Divider />
-        {instruments.map((instrumentName, index) => (
+        {instruments.map((instrumentName: string) => (
           <Fragment key={instrumentName}>
             <ListItem disablePadding>
-              <ListItemButton>
-              <ListItemButton {...buttonProps({ index })}>
+              <ListItemButton
+                selected={props.selected === instrumentName}
+                onClick={() => {
+                  props.handleInstrumentChange(instrumentName);
+                }}
+              >
                 <ListItemText primary={instrumentName} />
               </ListItemButton>
             </ListItem>
