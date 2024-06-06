@@ -1,16 +1,10 @@
 "use client";
-import React, { useEffect, useRef } from "react";
-
-import Editor, { useMonaco } from "@monaco-editor/react";
+import React, { useRef, useState } from "react";
+import Editor from "@monaco-editor/react";
 
 export default function TextEditor() {
-  const monaco = useMonaco();
   const editorRef = useRef(null);
-  useEffect(() => {
-    if (monaco) {
-      console.log("monaco instance for making changes pre mount:", monaco);
-    }
-  }, [monaco]);
+  const [scheduledChange, setScheduledChange] = useState(false);
   const options = {
     automaticLayout: true,
     formatOnPaste: true,
@@ -21,17 +15,22 @@ export default function TextEditor() {
 
   // onChange get updated text (JSON), format the code after a 5 second delay
   const handleChange = () => {
+    console.log("scheduleChange", scheduledChange);
     const updatedText = editorRef.current.getModel().getValue();
-    console.log(updatedText);
 
-    setTimeout(() => {
-      editorRef.current.getAction("editor.action.formatDocument").run();
-    }, 5000);
+    if (!scheduledChange) {
+      setScheduledChange(true);
+      console.log("scheduling formatting for code:");
+      console.log(updatedText);
+      setTimeout(() => {
+        editorRef.current.getAction("editor.action.formatDocument").run();
+        setScheduledChange(false);
+      }, 5000);
+    }
   };
 
-  const handleEditorDidMount = (editor, monaco) => {
+  const handleEditorDidMount = (editor) => {
     editorRef.current = editor;
-
     // Format the initial code on load
     setTimeout(() => {
       editor.getAction("editor.action.formatDocument").run();
