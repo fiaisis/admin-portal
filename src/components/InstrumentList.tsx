@@ -1,4 +1,5 @@
-import Box from "@mui/material/Box";
+"use client";
+
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -53,37 +54,44 @@ const instruments = [
   "ZOOM",
 ];
 
-export default function InstrumentList() {
+interface InstrumentListProps {
+  selected: string;
+  handleInstrumentChange: (instrument: string) => void;
+}
+
+export default function InstrumentList(props: InstrumentListProps) {
   return (
-    <Box sx={{ width: "100%", maxWidth: 360 }}>
-      <Paper
-        sx={{
-          maxHeight: "90vh",
-          overflow: "auto",
-          width: "20vw",
-          bgcolor: "background.paper",
-        }}
+    <Paper
+      sx={{
+        maxHeight: "90vh",
+        overflow: "auto",
+        bgcolor: "background.paper",
+      }}
+    >
+      <List
+        subheader={
+          <ListSubheader component="div" id="nested-list-subheader">
+            Instruments
+          </ListSubheader>
+        }
       >
-        <List
-          subheader={
-            <ListSubheader component="div" id="nested-list-subheader">
-              Instruments
-            </ListSubheader>
-          }
-        >
-          <Divider />
-          {instruments.map((instrumentName) => (
-            <Fragment key={instrumentName}>
-              <ListItem disablePadding>
-                <ListItemButton>
-                  <ListItemText primary={instrumentName} />
-                </ListItemButton>
-              </ListItem>
-              <Divider component="li" />
-            </Fragment>
-          ))}
-        </List>
-      </Paper>
-    </Box>
+        <Divider />
+        {instruments.map((instrumentName: string) => (
+          <Fragment key={instrumentName}>
+            <ListItem disablePadding>
+              <ListItemButton
+                selected={props.selected === instrumentName}
+                onClick={() => {
+                  props.handleInstrumentChange(instrumentName);
+                }}
+              >
+                <ListItemText primary={instrumentName} />
+              </ListItemButton>
+            </ListItem>
+            <Divider component="li" />
+          </Fragment>
+        ))}
+      </List>
+    </Paper>
   );
 }
