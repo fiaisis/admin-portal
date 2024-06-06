@@ -15,17 +15,14 @@ export default function TextEditor() {
 
   // onChange get updated text (JSON), format the code after a 5 second delay
   const handleChange = () => {
-    console.log("scheduleChange", scheduledChange);
     const updatedText = editorRef.current.getModel().getValue();
 
     if (!scheduledChange) {
       setScheduledChange(true);
-      console.log("scheduling formatting for code:");
-      console.log(updatedText);
       setTimeout(() => {
         editorRef.current.getAction("editor.action.formatDocument").run();
         setScheduledChange(false);
-      }, 5000);
+      }, 5000); // 5 second delay
     }
   };
 
