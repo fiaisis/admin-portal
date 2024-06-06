@@ -1,7 +1,11 @@
 import ButtonAlert from "./ButtonAlert";
 import { Box } from "@mui/material";
 
-export default function EditorHeader() {
+interface EditorHeaderProps {
+  title: string;
+}
+
+export default function EditorHeader(props: EditorHeaderProps) {
   return (
     <Box
       sx={{
@@ -18,7 +22,7 @@ export default function EditorHeader() {
           textAlign: "center",
         }}
       >
-        <h1> Title</h1>
+        <h1> {props.title} </h1>
       </Box>
       <Box
         sx={{

@@ -26,7 +26,7 @@ export default function SpecificationEditor() {
           />
         </Box>
         <Box sx={{ flex: 7 }}>
-          <EditorHeader></EditorHeader>
+          <EditorHeader title={instrument}></EditorHeader>
           <Divider
             sx={{
               height: 10,
