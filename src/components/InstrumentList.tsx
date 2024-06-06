@@ -1,3 +1,5 @@
+"use client";
+
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -6,6 +8,7 @@ import Divider from "@mui/material/Divider";
 import { Fragment } from "react";
 import ListSubheader from "@mui/material/ListSubheader";
 import Paper from "@mui/material/Paper";
+import { useState } from "react";
 
 const instruments = [
   "ALF",
@@ -53,6 +56,16 @@ const instruments = [
 ];
 
 export default function InstrumentList() {
+  // default to first instrument
+  const [instrument, setInstrument] = useState(instruments[0]);
+  const buttonProps = (value) => ({
+    selected: instrument === instruments[value.index],
+    onClick: () => {
+      value = instruments[value.index];
+      setInstrument(value);
+    },
+  });
+
   return (
     <Paper
       sx={{
@@ -69,10 +82,11 @@ export default function InstrumentList() {
         }
       >
         <Divider />
-        {instruments.map((instrumentName) => (
+        {instruments.map((instrumentName, index) => (
           <Fragment key={instrumentName}>
             <ListItem disablePadding>
               <ListItemButton>
+              <ListItemButton {...buttonProps({ index })}>
                 <ListItemText primary={instrumentName} />
               </ListItemButton>
             </ListItem>
