@@ -9,6 +9,7 @@ export default function EditorHeader() {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
+        paddingRight: 5,
       }}
     >
       <Box

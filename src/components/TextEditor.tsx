@@ -16,6 +16,7 @@ export default function TextEditor() {
     formatOnPaste: true,
     lineWrap: "on",
     wordWrap: "on",
+    scrollBeyondLastLine: false,
   };
 
   // onChange get updated text (JSON), format the code after a 5 second delay

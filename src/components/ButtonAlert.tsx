@@ -32,9 +32,9 @@ export default function ButtonAlert() {
         open={showAlert}
         autoHideDuration={3000}
         onClose={handleClose}
-        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
-        <Alert severity="success" onClose={() => handleClose}>
+        <Alert severity="success" onClose={handleClose}>
           JSON specification file edited successfully.
         </Alert>
       </Snackbar>
