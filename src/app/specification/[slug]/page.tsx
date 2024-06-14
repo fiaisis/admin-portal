@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 export const dynamicParams = false;
 const API_BASE_ENDPOINT = "http://127.0.0.1:8000";
 
-export async function getInstruments() {
+async function getInstruments() {
   const res = await fetch(`${API_BASE_ENDPOINT}/instrument`);
   const result = await res.json();
 
@@ -15,19 +15,23 @@ export async function getInstruments() {
 }
 
 // whilst API changes are pending, extraction of names is required
-function extract_instrument_names(instruments) {
+function extract_instrument_names(instruments: { instrument_name: string }[]) {
   return instruments.map((element) => element["instrument_name"]).sort();
 }
 
-// removing the `export` allows calls to internal api route
-async function generateStaticParams() {
-  const instruments = await getInstruments();
-  return instruments.map((instrument) => {
+export async function generateStaticParams() {
+  let instruments = await getInstruments();
+  instruments = extract_instrument_names(instruments);
+  return instruments.map((instrument: string) => {
     return { slug: instrument };
   });
 }
 
-export default async function SpecificationEditor({ params }) {
+export default async function SpecificationEditor({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const instrument = params.slug;
   const instruments = await getInstruments();
 
