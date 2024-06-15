@@ -1,41 +1,47 @@
 "use client";
 import React, { useRef, useState } from "react";
-import Editor from "@monaco-editor/react";
+import MonacoEditor, { OnMount } from "@monaco-editor/react";
+import { editor } from "monaco-editor";
 
 export default function TextEditor() {
-  const editorRef = useRef(null);
+  const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const [scheduledChange, setScheduledChange] = useState(false);
   const options = {
     automaticLayout: true,
     formatOnPaste: true,
     lineWrap: "on",
-    wordWrap: "on",
+    // Type 'string' is not assignable to type '"on" | "off" | "wordWrapColumn" | "bounded" | undefined'.
+    wordWrap: "on" as const,
     scrollBeyondLastLine: false,
   };
 
   // onChange get updated text (JSON), format the code after a 5 second delay
   const handleChange = () => {
-    const updatedText = editorRef.current.getModel().getValue();
+    // for near future use to update specifications
+    // const updatedText = editorRef.current.getModel().getValue();
 
     if (!scheduledChange) {
       setScheduledChange(true);
       setTimeout(() => {
-        editorRef.current.getAction("editor.action.formatDocument").run();
+        // non null check
+        editorRef?.current?.getAction("editor.action.formatDocument")?.run();
         setScheduledChange(false);
       }, 5000); // 5 second delay
     }
   };
 
-  const handleEditorDidMount = (editor) => {
-    editorRef.current = editor;
-    // Format the initial code on load
-    setTimeout(() => {
-      editor.getAction("editor.action.formatDocument").run();
-    }, 100); // Delay to ensure editor is fully loaded
+  const handleEditorDidMount: OnMount = (MonacoEditor) => {
+    if (MonacoEditor) {
+      editorRef.current = MonacoEditor;
+      // Format the initial code on load
+      setTimeout(() => {
+        MonacoEditor.getAction("editor.action.formatDocument")?.run();
+      }, 100); // Delay to ensure editor is fully loaded
+    }
   };
 
   return (
-    <Editor
+    <MonacoEditor
       defaultLanguage="json"
       options={options}
       onChange={handleChange}
