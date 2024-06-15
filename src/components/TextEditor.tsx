@@ -3,9 +3,26 @@ import React, { useRef, useState } from "react";
 import MonacoEditor, { OnMount } from "@monaco-editor/react";
 import { editor } from "monaco-editor";
 
-export default function TextEditor() {
+interface TextEditorProps {
+  instrument: string;
+}
+
+async function getSpecification(instrumentName: string) {
+  const response = await fetch(
+    `/api/instrument?instrumentName=${instrumentName}`
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch data");
+  }
+
+  return JSON.stringify(await response.json());
+}
+
+export default function TextEditor(props: TextEditorProps) {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const [scheduledChange, setScheduledChange] = useState(false);
+  const [text, setText] = useState("");
   const options = {
     automaticLayout: true,
     formatOnPaste: true,
@@ -30,9 +47,12 @@ export default function TextEditor() {
     }
   };
 
-  const handleEditorDidMount: OnMount = (MonacoEditor) => {
+  const handleEditorDidMount: OnMount = async (MonacoEditor) => {
     if (MonacoEditor) {
       editorRef.current = MonacoEditor;
+      // update displayed json with retrieved JSON specification
+      const specification = await getSpecification(props.instrument);
+      setText(specification);
       // Format the initial code on load
       setTimeout(() => {
         MonacoEditor.getAction("editor.action.formatDocument")?.run();
@@ -46,23 +66,7 @@ export default function TextEditor() {
       options={options}
       onChange={handleChange}
       onMount={handleEditorDidMount}
-      defaultValue='[{
-  "border": "{{int(1, 5)}}px {{random(solid, dotted, dashed)}} {{color()}}",
-  "coordinates": {
-    "type": "array",
-    "count": 2,
-    "items": "{{float(0, 120, 5)}}"
-  },
-  "password": "xX{{animal()}}-{{string(6, 10, *)}}"
-},
-{
-  "border": "4px solid crimson",
-  "coordinates": [
-    55.69488,
-    38.29534
-  ],
-  "password": "xXturkey-*********"
-}]'
+      value={text}
     />
   );
 }

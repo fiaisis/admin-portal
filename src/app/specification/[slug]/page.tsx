@@ -62,7 +62,7 @@ export default async function SpecificationEditor({
               borderTopWidth: 2,
             }}
           ></Divider>
-          <TextEditor />
+          <TextEditor instrument={instrument} />
         </Box>
       </Box>
     </>
