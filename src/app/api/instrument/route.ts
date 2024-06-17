@@ -28,3 +28,8 @@ export async function GET(request: NextRequest) {
     });
   }
 }
+
+export async function POST(request: NextRequest) {
+  console.log("making a POST");
+  console.log(request.nextUrl.searchParams);
+}

@@ -5,6 +5,8 @@ import { editor } from "monaco-editor";
 
 interface TextEditorProps {
   instrument: string;
+  text: string;
+  setText: (text: string) => void;
 }
 
 async function getSpecification(instrumentName: string) {
@@ -22,7 +24,6 @@ async function getSpecification(instrumentName: string) {
 export default function TextEditor(props: TextEditorProps) {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const [scheduledChange, setScheduledChange] = useState(false);
-  const [text, setText] = useState("");
   const options = {
     automaticLayout: true,
     formatOnPaste: true,
@@ -52,7 +53,7 @@ export default function TextEditor(props: TextEditorProps) {
       editorRef.current = MonacoEditor;
       // update displayed json with retrieved JSON specification
       const specification = await getSpecification(props.instrument);
-      setText(specification);
+      props.setText(specification);
       // Format the initial code on load
       setTimeout(() => {
         MonacoEditor.getAction("editor.action.formatDocument")?.run();
@@ -66,7 +67,7 @@ export default function TextEditor(props: TextEditorProps) {
       options={options}
       onChange={handleChange}
       onMount={handleEditorDidMount}
-      value={text}
+      value={props.text}
     />
   );
 }

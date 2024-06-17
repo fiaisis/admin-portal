@@ -29,7 +29,7 @@ export default function EditorHeader(props: EditorHeaderProps) {
           display: "flex",
         }}
       >
-        <ButtonAlert />
+        <ButtonAlert instrument={props.title} />
       </Box>
     </Box>
   );

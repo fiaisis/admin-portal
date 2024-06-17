@@ -5,10 +5,15 @@ import { useState } from "react";
 import { Button, Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
 
-export default function ButtonAlert() {
+interface ButtonAlertProps {
+  instrument: string;
+}
+
+export default function ButtonAlert(props: ButtonAlertProps) {
   const [showAlert, setShowAlert] = useState(false);
 
   const handleClick = () => {
+    console.log("need to make a POST for the instrument", props.instrument);
     setShowAlert(true);
   };
 
