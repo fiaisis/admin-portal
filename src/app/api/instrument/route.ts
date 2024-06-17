@@ -29,7 +29,32 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function POST(request: NextRequest) {
-  console.log("making a POST");
-  console.log(request.nextUrl.searchParams);
+export async function PUT(request: NextRequest) {
+  const body = await request.json();
+  const instrument = body["instrument"];
+  const specification = body["specification"];
+
+  try {
+    const response = await fetch(
+      `${API_BASE}/instrument/${instrument}/specification`,
+      {
+        method: "PUT",
+        body: specification,
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`Error fetching data: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return new NextResponse(JSON.stringify(data), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (error) {
+    return new NextResponse(JSON.stringify({ error }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
 }

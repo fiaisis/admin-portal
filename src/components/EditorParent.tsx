@@ -12,9 +12,29 @@ interface EditorParentProps {
 export default function EditorParent(props: EditorParentProps) {
   const [text, setText] = useState("");
 
+  async function updateSpecification() {
+    const response = await fetch(`/api/instrument`, {
+      method: "PUT",
+      body: JSON.stringify({
+        instrument: props.instrument,
+        specification: JSON.parse(text),
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch data");
+    }
+
+    return JSON.stringify(await response.json());
+  }
+
   return (
     <>
-      <EditorHeader title={props.instrument} />
+      <EditorHeader
+        title={props.instrument}
+        specification={text}
+        handleSubmit={updateSpecification}
+      />
       <Divider
         sx={{
           height: 10,

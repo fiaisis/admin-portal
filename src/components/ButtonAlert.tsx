@@ -7,13 +7,15 @@ import Alert from "@mui/material/Alert";
 
 interface ButtonAlertProps {
   instrument: string;
+  specification: string;
+  handleSubmit: () => void;
 }
 
 export default function ButtonAlert(props: ButtonAlertProps) {
   const [showAlert, setShowAlert] = useState(false);
 
   const handleClick = () => {
-    console.log("need to make a POST for the instrument", props.instrument);
+    props.handleSubmit();
     setShowAlert(true);
   };
 

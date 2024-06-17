@@ -35,8 +35,8 @@ export default function TextEditor(props: TextEditorProps) {
 
   // onChange get updated text (JSON), format the code after a 5 second delay
   const handleChange = () => {
-    // for near future use to update specifications
-    // const updatedText = editorRef.current.getModel().getValue();
+    const updatedText = editorRef?.current?.getModel()?.getValue();
+    props.setText(updatedText as string);
 
     if (!scheduledChange) {
       setScheduledChange(true);

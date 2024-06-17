@@ -1,8 +1,5 @@
-import EditorHeader from "@/components/EditorHeader";
 import EditorParent from "@/components/EditorParent";
 import InstrumentList from "@/components/InstrumentList";
-import TextEditor from "@/components/TextEditor";
-import { Divider } from "@mui/material";
 import Box from "@mui/material/Box";
 
 export const dynamicParams = false;
@@ -10,7 +7,6 @@ const API_BASE_ENDPOINT = "http://127.0.0.1:8000";
 
 async function getInstruments() {
   const res = await fetch(`${API_BASE_ENDPOINT}/instrument`);
-  console.log("result of fetch getInstruments", res);
   const result = await res.json();
 
   return result;
@@ -19,30 +15,6 @@ async function getInstruments() {
 // whilst API changes are pending, extraction of names is required
 function extract_instrument_names(instruments: { instrument_name: string }[]) {
   return instruments.map((element) => element["instrument_name"]).sort();
-}
-
-// GET spec
-// async function getSpecification(instrumentName: string) {
-//   const response = await fetch(
-//     `/api/instrument?instrumentName=${instrumentName}`
-//   );
-
-//   if (!response.ok) {
-//     throw new Error("Failed to fetch data");
-//   }
-
-//   return JSON.stringify(await response.json());
-// }
-
-// POST to specification
-async function updateSpecification(instrumentName: string) {
-  const response = await fetch(`/api/instrument/${instrumentName}`);
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch data");
-  }
-
-  return JSON.stringify(await response.json());
 }
 
 export async function generateStaticParams() {
