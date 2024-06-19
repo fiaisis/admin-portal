@@ -9,6 +9,7 @@ export async function GET(request: NextRequest) {
       `${API_BASE}/instrument/${instrumentName}/specification`,
       {
         method: "GET",
+        cache: "no-store",
       }
     );
 
@@ -30,16 +31,18 @@ export async function GET(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
-  const body = await request.json();
-  const instrument = body["instrument"];
-  const specification = body["specification"];
+  const json_body = await request.json();
+  const instrument = json_body["instrument"];
+  const specification = json_body["specification"];
 
   try {
     const response = await fetch(
       `${API_BASE}/instrument/${instrument}/specification`,
       {
         method: "PUT",
-        body: specification,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(specification),
+        cache: "no-store",
       }
     );
     if (!response.ok) {
