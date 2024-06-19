@@ -5,19 +5,19 @@ import EditorHeader from "@/components/EditorHeader";
 import TextEditor from "@/components/TextEditor";
 import { useState } from "react";
 
-interface EditorParentProps {
+interface EditorContainerProps {
   instrument: string;
 }
 
-export default function EditorParent(props: EditorParentProps) {
-  const [text, setText] = useState("");
+export default function EditorContainer(props: EditorContainerProps) {
+  const [specification, setSpecification] = useState("");
 
   async function updateSpecification() {
     const response = await fetch(`/api/instrument`, {
       method: "PUT",
       body: JSON.stringify({
         instrument: props.instrument,
-        specification: JSON.parse(text),
+        specification: JSON.parse(specification),
       }),
     });
 
@@ -32,7 +32,7 @@ export default function EditorParent(props: EditorParentProps) {
     <>
       <EditorHeader
         title={props.instrument}
-        specification={text}
+        specification={specification}
         handleSubmit={updateSpecification}
       />
       <Divider
@@ -41,7 +41,11 @@ export default function EditorParent(props: EditorParentProps) {
           borderTopWidth: 2,
         }}
       ></Divider>
-      <TextEditor instrument={props.instrument} text={text} setText={setText} />
+      <TextEditor
+        instrument={props.instrument}
+        specification={specification}
+        setSpecification={setSpecification}
+      />
     </>
   );
 }

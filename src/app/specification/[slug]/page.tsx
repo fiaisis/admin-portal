@@ -1,4 +1,4 @@
-import EditorParent from "@/components/EditorParent";
+import EditorContainer from "@/components/EditorContainer";
 import InstrumentList from "@/components/InstrumentList";
 import Box from "@mui/material/Box";
 
@@ -53,7 +53,7 @@ export default async function SpecificationEditor({
           />
         </Box>
         <Box sx={{ flex: 7 }}>
-          <EditorParent instrument={instrument} />
+          <EditorContainer instrument={instrument} />
         </Box>
       </Box>
     </>
