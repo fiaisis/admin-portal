@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 interface EditorHeaderProps {
   title: string;
   specification: string;
-  handleSubmit: () => void;
+  handleSubmit: () => Promise<string>;
 }
 
 export default function EditorHeader(props: EditorHeaderProps) {

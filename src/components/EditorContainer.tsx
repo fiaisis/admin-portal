@@ -22,10 +22,20 @@ export default function EditorContainer(props: EditorContainerProps) {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to fetch data");
-    }
+      const responseObj = {
+        statusText: response.statusText,
+        contents: "Specification update failed",
+      };
 
-    return JSON.stringify(await response.json());
+      console.error("Specification update failed");
+      return JSON.stringify(responseObj);
+    } else {
+      const responseObj = {
+        statusText: response.statusText,
+        contents: "Specification updated successfully",
+      };
+      return JSON.stringify(responseObj);
+    }
   }
 
   return (

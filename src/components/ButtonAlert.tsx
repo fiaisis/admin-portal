@@ -8,14 +8,16 @@ import Alert from "@mui/material/Alert";
 interface ButtonAlertProps {
   instrument: string;
   specification: string;
-  handleSubmit: () => void;
+  handleSubmit: () => Promise<string>;
 }
 
 export default function ButtonAlert(props: ButtonAlertProps) {
   const [showAlert, setShowAlert] = useState(false);
+  const [alertText, setAlertText] = useState<{ [key: string]: string }>({});
 
-  const handleClick = () => {
-    props.handleSubmit();
+  const handleClick = async () => {
+    const serverResponse = JSON.parse(await props.handleSubmit());
+    setAlertText(serverResponse);
     setShowAlert(true);
   };
 
@@ -41,8 +43,11 @@ export default function ButtonAlert(props: ButtonAlertProps) {
         onClose={handleClose}
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
-        <Alert severity="success" onClose={handleClose}>
-          JSON specification file edited successfully.
+        <Alert
+          severity={alertText["statusText"] == "OK" ? "success" : "error"}
+          onClose={handleClose}
+        >
+          {JSON.stringify(alertText["contents"])}
         </Alert>
       </Snackbar>
     </div>
