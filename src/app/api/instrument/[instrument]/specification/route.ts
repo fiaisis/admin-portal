@@ -32,14 +32,17 @@ export async function GET(
   }
 }
 
-export async function PUT(request: NextRequest) {
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: { instrument: string } }
+) {
   const json_body = await request.json();
-  const instrument = json_body["instrument"];
+  const instrument = params.instrument;
   const specification = json_body["specification"];
 
   try {
     const response = await fetch(
-      `${API_BASE}/instrument/${instrument}/specification`,
+      ` ${API_BASE}/instrument/${instrument}/specification`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },

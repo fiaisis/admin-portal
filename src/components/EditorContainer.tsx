@@ -13,13 +13,15 @@ export default function EditorContainer(props: EditorContainerProps) {
   const [specification, setSpecification] = useState("");
 
   async function updateSpecification() {
-    const response = await fetch(`/api/instrument/[instrument]/specification`, {
-      method: "PUT",
-      body: JSON.stringify({
-        instrument: props.instrument,
-        specification: JSON.parse(specification),
-      }),
-    });
+    const response = await fetch(
+      `/api/instrument/${props.instrument}/specification`,
+      {
+        method: "PUT",
+        body: JSON.stringify({
+          specification: JSON.parse(specification),
+        }),
+      }
+    );
 
     if (!response.ok) {
       const responseObj = {
