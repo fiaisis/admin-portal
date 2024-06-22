@@ -2,11 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 
 const API_BASE = "http://127.0.0.1:8000";
 
-export async function GET(request: NextRequest) {
-  const instrumentName = request.nextUrl.searchParams.get("instrumentName");
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { instrument: string } }
+) {
   try {
     const response = await fetch(
-      `${API_BASE}/instrument/${instrumentName}/specification`,
+      `${API_BASE}/instrument/${params.instrument}/specification`,
       {
         method: "GET",
         cache: "no-store",

@@ -2,6 +2,7 @@
 import React, { useRef, useState } from "react";
 import MonacoEditor, { OnMount } from "@monaco-editor/react";
 import { editor } from "monaco-editor";
+import { useParams } from "next/navigation";
 
 interface TextEditorProps {
   instrument: string;
@@ -9,10 +10,8 @@ interface TextEditorProps {
   setSpecification: (specification: string) => void;
 }
 
-async function getSpecification(instrumentName: string) {
-  const response = await fetch(
-    `/api/instrument?instrumentName=${instrumentName}`
-  );
+async function getSpecification(instrument: string) {
+  const response = await fetch(`/api/instrument/${instrument}/specification`);
 
   if (!response.ok) {
     throw new Error("Failed to fetch data");
@@ -22,6 +21,9 @@ async function getSpecification(instrumentName: string) {
 }
 
 export default function TextEditor(props: TextEditorProps) {
+  // [slug] from the app route is converted to the [instrument] in the api route
+  const { slug } = useParams();
+
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const [scheduledChange, setScheduledChange] = useState(false);
   const options = {
@@ -52,7 +54,7 @@ export default function TextEditor(props: TextEditorProps) {
     if (MonacoEditor) {
       editorRef.current = MonacoEditor;
       // update displayed json with retrieved JSON specification
-      const initialSpecification = await getSpecification(props.instrument);
+      const initialSpecification = await getSpecification(slug as string);
       props.setSpecification(initialSpecification);
       // Format the initial code on load
       setTimeout(() => {
