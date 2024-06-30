@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE_URL = process.env.API_BASE_URL;
 
 export async function GET(
   request: NextRequest,
@@ -8,7 +8,7 @@ export async function GET(
 ) {
   try {
     const response = await fetch(
-      `${API_BASE}/instrument/${params.instrument}/specification`,
+      `${API_BASE_URL}/instrument/${params.instrument}/specification`,
       {
         method: "GET",
         cache: "no-store",
@@ -42,7 +42,7 @@ export async function PUT(
 
   try {
     const response = await fetch(
-      ` ${API_BASE}/instrument/${instrument}/specification`,
+      ` ${API_BASE_URL}/instrument/${instrument}/specification`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },

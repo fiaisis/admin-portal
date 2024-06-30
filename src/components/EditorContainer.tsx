@@ -52,7 +52,7 @@ export default function EditorContainer(props: EditorContainerProps) {
           height: 10,
           borderTopWidth: 2,
         }}
-      ></Divider>
+      />
       <TextEditor
         instrument={props.instrument}
         specification={specification}

@@ -3,10 +3,10 @@ import InstrumentList from "@/components/InstrumentList";
 import Box from "@mui/material/Box";
 
 export const dynamicParams = false;
-const API_BASE_ENDPOINT = "http://127.0.0.1:8000";
+const API_BASE_URL = process.env.API_BASE_URL;
 
 async function getInstruments() {
-  const res = await fetch(`${API_BASE_ENDPOINT}/instrument`);
+  const res = await fetch(`${API_BASE_URL}/instrument`);
   const result = await res.json();
 
   return result;

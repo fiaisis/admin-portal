@@ -29,7 +29,6 @@ export default function TextEditor(props: TextEditorProps) {
   const options = {
     automaticLayout: true,
     formatOnPaste: true,
-    lineWrap: "on",
     // Type 'string' is not assignable to type '"on" | "off" | "wordWrapColumn" | "bounded" | undefined'.
     wordWrap: "on" as const,
     scrollBeyondLastLine: false,
