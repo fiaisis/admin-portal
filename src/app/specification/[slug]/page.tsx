@@ -3,23 +3,55 @@ import InstrumentList from "@/components/InstrumentList";
 import Box from "@mui/material/Box";
 
 export const dynamicParams = false;
-const API_BASE_URL = process.env.API_BASE_URL;
 
-async function getInstruments() {
-  const res = await fetch(`${API_BASE_URL}/instrument`);
-  const result = await res.json();
-
-  return result;
-}
-
-// whilst API changes are pending, extraction of names is required
-function extract_instrument_names(instruments: { instrument_name: string }[]) {
-  return instruments.map((element) => element["instrument_name"]).sort();
-}
+/* Instruments are being hardcoded due to potential issue fetching them from within 
+github actions */
+const instruments: string[] = [
+  "ALF",
+  "ARGUS",
+  "CHIPLR",
+  "CHRONUS",
+  "CRISP",
+  "EMU",
+  "ENGINX",
+  "GEM",
+  "HET",
+  "HIFI",
+  "HRPD",
+  "IMAT",
+  "INES",
+  "INTER",
+  "IRIS",
+  "LAD",
+  "LARMOR",
+  "LET",
+  "LOQ",
+  "MAPS",
+  "MARI",
+  "MERLIN",
+  "MUSR",
+  "NILE",
+  "NIMROD",
+  "OFFSPEC",
+  "OSIRIS",
+  "PEARL",
+  "PEARL (HIPR)",
+  "POLARIS",
+  "POLREF",
+  "PRISMA",
+  "ROTAX",
+  "SANDALS",
+  "SANS2D",
+  "SURF",
+  "SXD",
+  "TFXA",
+  "TOSCA",
+  "VESUVIO",
+  "WISH",
+  "ZOOM",
+];
 
 export async function generateStaticParams() {
-  let instruments = await getInstruments();
-  instruments = extract_instrument_names(instruments);
   return instruments.map((instrument: string) => {
     return { slug: instrument };
   });
@@ -31,9 +63,6 @@ export default async function SpecificationEditor({
   params: { slug: string };
 }) {
   const instrument = params.slug;
-  const instruments = await getInstruments();
-
-  const instrument_names = extract_instrument_names(instruments);
 
   return (
     <>
@@ -47,10 +76,7 @@ export default async function SpecificationEditor({
         }}
       >
         <Box sx={{ flex: 1 }}>
-          <InstrumentList
-            selected={instrument}
-            instruments={instrument_names}
-          />
+          <InstrumentList selected={instrument} instruments={instruments} />
         </Box>
         <Box sx={{ flex: 7 }}>
           <EditorContainer instrument={instrument} />
