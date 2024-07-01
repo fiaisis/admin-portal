@@ -1,41 +1,19 @@
-"use client";
-import InstrumentList from "@/components/InstrumentList";
-import TextEditor from "@/components/TextEditor";
-import { Box, Divider } from "@mui/material";
-import { useState } from "react";
-import EditorHeader from "@/components/EditorHeader";
+import { Button, Container } from "@mui/material";
+const DEFAULT_INSTRUMENT = "MARI";
 
-export default function SpecificationEditor() {
-  const [instrument, setInstrument] = useState<string>("ALF");
-
+export default function Home() {
   return (
-    <>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          flexDirection: "row",
-          objectFit: "contains",
-          height: "75vh",
-        }}
+    <Container sx={{ display: "flex", gap: 1, mt: 1, mx: 0 }}>
+      <Button
+        variant="contained"
+        size="large"
+        href={`/specification/${DEFAULT_INSTRUMENT}`}
       >
-        <Box sx={{ flex: 1 }}>
-          <InstrumentList
-            selected={instrument}
-            handleInstrumentChange={setInstrument}
-          />
-        </Box>
-        <Box sx={{ flex: 7 }}>
-          <EditorHeader title={instrument} />
-          <Divider
-            sx={{
-              height: 10,
-              borderTopWidth: 2,
-            }}
-          ></Divider>
-          <TextEditor />
-        </Box>
-      </Box>
-    </>
+        Specifications
+      </Button>
+      <Button disabled variant="contained" size="large">
+        fileshare
+      </Button>
+    </Container>
   );
 }

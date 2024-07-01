@@ -1,62 +1,74 @@
 "use client";
 import React, { useRef, useState } from "react";
-import Editor from "@monaco-editor/react";
+import MonacoEditor, { OnMount } from "@monaco-editor/react";
+import { editor } from "monaco-editor";
+import { useParams } from "next/navigation";
 
-export default function TextEditor() {
-  const editorRef = useRef(null);
+interface TextEditorProps {
+  instrument: string;
+  specification: string;
+  setSpecification: (specification: string) => void;
+}
+
+async function getSpecification(instrument: string) {
+  const response = await fetch(`/api/instrument/${instrument}/specification`);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch data");
+  }
+
+  return JSON.stringify(await response.json());
+}
+
+export default function TextEditor(props: TextEditorProps) {
+  // [slug] from the app route is converted to the [instrument] in the api route
+  const { slug } = useParams();
+
+  const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const [scheduledChange, setScheduledChange] = useState(false);
   const options = {
     automaticLayout: true,
     formatOnPaste: true,
-    lineWrap: "on",
-    wordWrap: "on",
+    // Type 'string' is not assignable to type '"on" | "off" | "wordWrapColumn" | "bounded" | undefined'.
+    wordWrap: "on" as const,
     scrollBeyondLastLine: false,
   };
 
   // onChange get updated text (JSON), format the code after a 5 second delay
   const handleChange = () => {
-    const updatedText = editorRef.current.getModel().getValue();
+    const updatedSpecification = editorRef?.current?.getModel()?.getValue();
+    props.setSpecification(updatedSpecification as string);
 
     if (!scheduledChange) {
       setScheduledChange(true);
       setTimeout(() => {
-        editorRef.current.getAction("editor.action.formatDocument").run();
+        // non null check
+        editorRef?.current?.getAction("editor.action.formatDocument")?.run();
         setScheduledChange(false);
       }, 5000); // 5 second delay
     }
   };
 
-  const handleEditorDidMount = (editor) => {
-    editorRef.current = editor;
-    // Format the initial code on load
-    setTimeout(() => {
-      editor.getAction("editor.action.formatDocument").run();
-    }, 100); // Delay to ensure editor is fully loaded
+  const handleEditorDidMount: OnMount = async (MonacoEditor) => {
+    if (MonacoEditor) {
+      editorRef.current = MonacoEditor;
+      // update displayed json with retrieved JSON specification
+      const initialSpecification = await getSpecification(slug as string);
+      props.setSpecification(initialSpecification);
+      // Format the initial code on load
+      setTimeout(() => {
+        MonacoEditor.getAction("editor.action.formatDocument")?.run();
+      }, 100); // Delay to ensure editor is fully loaded
+    }
   };
 
   return (
-    <Editor
+    <MonacoEditor
       defaultLanguage="json"
       options={options}
       onChange={handleChange}
       onMount={handleEditorDidMount}
-      defaultValue='[{
-  "border": "{{int(1, 5)}}px {{random(solid, dotted, dashed)}} {{color()}}",
-  "coordinates": {
-    "type": "array",
-    "count": 2,
-    "items": "{{float(0, 120, 5)}}"
-  },
-  "password": "xX{{animal()}}-{{string(6, 10, *)}}"
-},
-{
-  "border": "4px solid crimson",
-  "coordinates": [
-    55.69488,
-    38.29534
-  ],
-  "password": "xXturkey-*********"
-}]'
+      value={props.specification}
     />
   );
 }

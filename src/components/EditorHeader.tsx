@@ -3,6 +3,8 @@ import { Box } from "@mui/material";
 
 interface EditorHeaderProps {
   title: string;
+  specification: string;
+  handleSubmit: () => Promise<string>;
 }
 
 export default function EditorHeader(props: EditorHeaderProps) {
@@ -29,7 +31,11 @@ export default function EditorHeader(props: EditorHeaderProps) {
           display: "flex",
         }}
       >
-        <ButtonAlert />
+        <ButtonAlert
+          instrument={props.title}
+          specification={props.specification}
+          handleSubmit={props.handleSubmit}
+        />
       </Box>
     </Box>
   );

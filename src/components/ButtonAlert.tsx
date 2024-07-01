@@ -5,10 +5,19 @@ import { useState } from "react";
 import { Button, Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
 
-export default function ButtonAlert() {
-  const [showAlert, setShowAlert] = useState(false);
+interface ButtonAlertProps {
+  instrument: string;
+  specification: string;
+  handleSubmit: () => Promise<string>;
+}
 
-  const handleClick = () => {
+export default function ButtonAlert(props: ButtonAlertProps) {
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertText, setAlertText] = useState<{ [key: string]: string }>({});
+
+  const handleClick = async () => {
+    const serverResponse = JSON.parse(await props.handleSubmit());
+    setAlertText(serverResponse);
     setShowAlert(true);
   };
 
@@ -34,8 +43,11 @@ export default function ButtonAlert() {
         onClose={handleClose}
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
-        <Alert severity="success" onClose={handleClose}>
-          JSON specification file edited successfully.
+        <Alert
+          severity={alertText["statusText"] == "OK" ? "success" : "error"}
+          onClose={handleClose}
+        >
+          {JSON.stringify(alertText["contents"])}
         </Alert>
       </Snackbar>
     </div>
