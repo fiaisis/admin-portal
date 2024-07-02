@@ -19,6 +19,5 @@ jobs:
         uses: creyD/prettier_action@v4.3
         with:
           dry: True
-          working_directory: .
-          prettier_options: --check **/*.{js,tsx,ts}
+          prettier_options: --config prettierrc.json --check **/*.{js,tsx,ts}
           only_changed: True
