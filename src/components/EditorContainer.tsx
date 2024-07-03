@@ -11,8 +11,11 @@ interface EditorContainerProps {
 
 export default function EditorContainer(props: EditorContainerProps) {
   const [specification, setSpecification] = useState('');
+  console.log('specification in editorContainer is', specification);
 
   async function updateSpecification() {
+    console.log('within update spec the spec is');
+    console.log(specification);
     const response = await fetch(`/api/instrument/${props.instrument}/specification`, {
       method: 'PUT',
       body: JSON.stringify({
