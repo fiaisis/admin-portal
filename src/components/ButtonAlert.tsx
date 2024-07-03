@@ -40,7 +40,11 @@ export default function ButtonAlert(props: ButtonAlertProps) {
         onClose={handleClose}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        <Alert severity={alertText['statusText'] == 'OK' ? 'success' : 'error'} onClose={handleClose}>
+        <Alert
+          severity={alertText['statusText'] == 'OK' ? 'success' : 'error'}
+          onClose={handleClose}
+          data-cy="ButtonAlert"
+        >
           {JSON.stringify(alertText['contents'])}
         </Alert>
       </Snackbar>
