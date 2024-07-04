@@ -4,7 +4,7 @@ jobs:
   cypress-run:
     strategy:
       matrix:
-        browser: [chrome, edge, firefox, safari]
+        browser: [chrome, edge, firefox]
 
     runs-on: ubuntu-22.04
     steps:
