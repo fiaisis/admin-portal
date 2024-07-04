@@ -118,9 +118,9 @@ describe('E2E Test', () => {
     );
 
     cy.wait(['@getSpecification']).then(() => {
-      cy.contains('Submit')
-        .click()
-        .then(() => '@putSpecification');
+      cy.contains('Submit').click();
+      cy.wait(['@putSpecification'], { responseTimeout: 5000 });
+      // .then(() => '@putSpecification');
     });
 
     // wrapping alert to capture its value (before it vanishes)
