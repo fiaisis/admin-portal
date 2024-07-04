@@ -20,8 +20,4 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: upload screenshots
-          # ./blank_artifact.txt to maintain directory structure
-          # https://github.com/actions/upload-artifact/issues/174
-          path: |
-            ./blank_artifact.txt
-            ./cypress/screenshots
+          path: cypress/screenshots
