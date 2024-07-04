@@ -12,3 +12,5 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           install-command: yarn install
+          build: yarn build
+          start: yarn start
