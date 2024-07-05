@@ -1,24 +1,24 @@
+beforeEach(() => {
+  // open admin-portal
+  cy.visit('http://localhost:3000');
+});
+
 describe('E2E Test', () => {
   it('Opens the root page', () => {
-    cy.visit('http://localhost:3000');
     cy.contains('Specifications');
   });
 });
 
 describe('E2E Test', () => {
   it('Opens specification page', () => {
-    cy.visit('http://localhost:3000');
     cy.contains('Specifications').click();
     cy.url().should('include', '/specification/MARI');
   });
 });
 
 describe('E2E Test', () => {
-  // const exampleJSON = require('../fixtures/example.json');
-
   it('A failed specification update', () => {
-    // open admin-portal, navigate to specification page (via button)
-    cy.visit('http://localhost:3000');
+    // navigate to specification page (via button)
     cy.contains('Specifications').click();
     // GET instrument list
     cy.intercept(
@@ -64,9 +64,6 @@ describe('E2E Test', () => {
         .then(() => '@failedPutSpecification');
     });
 
-    // works but no assert
-    // cy.get('[data-cy="ButtonAlert"]').contains('Specification update failed');
-
     // wrapping alert to capture its value (before it vanishes)
     // https://www.stevenhicks.me/blog/2020/02/working-with-variables-in-cypress-tests/
     cy.get('[data-cy="ButtonAlert"]').then((buttonAlert) => {
@@ -81,8 +78,6 @@ describe('E2E Test', () => {
 });
 
 describe('E2E Test', () => {
-  // const exampleJSON = require('../fixtures/example.json');
-
   it('A successful specification update', () => {
     // predefine GET and PUT Specification API calls to force stubbing of request
     // https://stackoverflow.com/a/68945338
@@ -120,7 +115,6 @@ describe('E2E Test', () => {
     cy.wait(['@getSpecification']).then(() => {
       cy.contains('Submit').click();
       cy.wait(['@putSpecification'], { responseTimeout: 5000 });
-      // .then(() => '@putSpecification');
     });
 
     // wrapping alert to capture its value (before it vanishes)
