@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
 
-import { Button, Snackbar } from "@mui/material";
-import Alert from "@mui/material/Alert";
+import { Button, Snackbar } from '@mui/material';
+import Alert from '@mui/material/Alert';
 
 interface ButtonAlertProps {
   instrument: string;
@@ -21,11 +21,8 @@ export default function ButtonAlert(props: ButtonAlertProps) {
     setShowAlert(true);
   };
 
-  const handleClose = (
-    event?: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
-    if (reason === "clickaway") {
+  const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
       return;
     }
 
@@ -41,13 +38,14 @@ export default function ButtonAlert(props: ButtonAlertProps) {
         open={showAlert}
         autoHideDuration={3000}
         onClose={handleClose}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         <Alert
-          severity={alertText["statusText"] == "OK" ? "success" : "error"}
+          severity={alertText['statusText'] == 'OK' ? 'success' : 'error'}
           onClose={handleClose}
+          data-cy="ButtonAlert"
         >
-          {JSON.stringify(alertText["contents"])}
+          {JSON.stringify(alertText['contents'])}
         </Alert>
       </Snackbar>
     </div>

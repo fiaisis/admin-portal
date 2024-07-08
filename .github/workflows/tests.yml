@@ -1,0 +1,28 @@
+name: End-to-end tests
+on: push
+jobs:
+  cypress-run:
+    strategy:
+      matrix:
+        browser: [chrome, edge, firefox]
+
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      # Install yarn dependencies, cache them correctly
+      # and run all Cypress tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          browser: ${{ matrix.browser }}
+          install-command: yarn install
+          build: yarn build
+          start: yarn start
+
+      - name: Upload failed test screenshots
+        if: failure()
+        uses: actions/upload-artifact@v2
+        with:
+          name: Failed on ${{matrix.browser}}
+          path: cypress/screenshots
