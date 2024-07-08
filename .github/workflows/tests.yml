@@ -22,7 +22,7 @@ jobs:
 
       - name: Upload failed test screenshots
         if: failure()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Failed on ${{matrix.browser}}
           path: cypress/screenshots
