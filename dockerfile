@@ -9,7 +9,7 @@ RUN yarn --frozen-lockfile
 
 COPY src /application/src
 COPY public /application/public
-COPY /app/node_modules /application/node_modules
+COPY node_modules /application/node_modules
 
 FROM base AS builder
 WORKDIR /application
