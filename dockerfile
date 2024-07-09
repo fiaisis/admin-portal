@@ -7,6 +7,9 @@ WORKDIR /application
 COPY package.json yarn.lock tsconfig.json /application
 RUN yarn --frozen-lockfile
 
+COPY src /application/src
+COPY public /application/public
+COPY /app/node_modules /application/node_modules
 
 FROM base AS builder
 WORKDIR /application
@@ -22,8 +25,19 @@ WORKDIR /application
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
 
-COPY --from=deps src /application/src
-COPY --from=deps public /application/public
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+# Set the correct permission for prerender cache
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
+
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=deps --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=deps --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
 EXPOSE 3000
 ENV PORT=3000
 
