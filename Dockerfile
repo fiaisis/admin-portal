@@ -11,10 +11,7 @@ FROM base AS builder
 WORKDIR /application
 COPY --from=deps /application/node_modules ./node_modules
 COPY --from=deps /application/package.json ./
-COPY tsconfig.json next.config.mjs ./ 
-
-COPY src /application/src
-COPY public /application/public
+COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED 1
 RUN yarn build
