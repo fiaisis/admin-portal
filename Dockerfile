@@ -26,7 +26,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-COPY --from=builder /application/public ./
+COPY --from=builder /application/public ./public
 COPY --from=builder /application/package.json ./
 
 # Set the correct permission for prerender cache

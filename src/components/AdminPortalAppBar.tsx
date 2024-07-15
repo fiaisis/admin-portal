@@ -12,7 +12,7 @@ export default function AdminPortalAppBar() {
         <Box display="left" justifyContent="flex-start">
           <Toolbar sx={{ padding: '4px' }}>
             <Image
-              src={'/fia-icon-32.png'}
+              src={'/admin-portal/fia-icon-32.png'}
               alt="FIA admin portal icon"
               width={134}
               height={134}
