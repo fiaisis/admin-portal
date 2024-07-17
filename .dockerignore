@@ -1,0 +1,10 @@
+Dockerfile
+.dockerignore
+.env
+
+npm-debug.log
+README.md
+.next 
+.git
+cypress
+cypress.config.ts

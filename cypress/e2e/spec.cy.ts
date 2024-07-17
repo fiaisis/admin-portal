@@ -1,6 +1,6 @@
 beforeEach(() => {
   // open admin-portal
-  cy.visit('http://localhost:3000');
+  cy.visit('/');
 });
 
 describe('E2E Test', () => {
@@ -95,8 +95,7 @@ describe('E2E Test', () => {
 
     // PUT API call
     cy.intercept('PUT', '/api/instrument/*/specification', {}).as('putSpecification');
-
-    cy.visit('http://localhost:3000');
+    cy.visit('http://localhost:3000/admin-portal');
     cy.contains('Specifications').click();
 
     // GET instrument list
