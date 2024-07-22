@@ -1,12 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 const API_BASE_URL = process.env.API_BASE_URL;
+const FIA_API_API_KEY = process.env.FIA_API_API_KEY;
 
 export async function GET(request: NextRequest, { params }: { params: { instrument: string } }) {
   try {
     const response = await fetch(`${API_BASE_URL}/instrument/${params.instrument}/specification`, {
       method: 'GET',
       cache: 'no-store',
+      headers: {
+        Authorization: `Bearer ${FIA_API_API_KEY}`,
+      },
     });
 
     if (!response.ok) {
@@ -34,7 +38,10 @@ export async function PUT(request: NextRequest, { params }: { params: { instrume
   try {
     const response = await fetch(` ${API_BASE_URL}/instrument/${instrument}/specification`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${FIA_API_API_KEY}`,
+      },
       body: JSON.stringify(specification),
       cache: 'no-store',
     });

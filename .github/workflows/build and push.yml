@@ -1,6 +1,9 @@
 name: Build and Push Docker Images
 
-on: push
+on:
+  push:
+    branches:
+      - main
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository_owner }}
