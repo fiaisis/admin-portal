@@ -11,7 +11,7 @@ interface TextEditorProps {
 }
 
 async function getSpecification(instrument: string) {
-  const response = await fetch(`/api/instrument/${instrument}/specification`);
+  const response = await fetch(`/admin-portal/api/instrument/${instrument}/specification`);
 
   if (!response.ok) {
     throw new Error('Failed to fetch data');
