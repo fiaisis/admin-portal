@@ -1,9 +1,8 @@
-"use client";
-import React, { useRef, useState } from "react";
-import MonacoEditor, { OnMount } from "@monaco-editor/react";
-import { editor } from "monaco-editor";
-import { useParams } from "next/navigation";
-import Box from "@mui/material/Box";
+'use client';
+import React, { useRef, useState } from 'react';
+import MonacoEditor, { OnMount } from '@monaco-editor/react';
+import { editor } from 'monaco-editor';
+import { useParams } from 'next/navigation';
 
 interface TextEditorProps {
   datacy: string;
@@ -14,12 +13,10 @@ interface TextEditorProps {
 }
 
 async function getSpecification(instrument: string) {
-  const response = await fetch(
-    `/admin-portal/api/instrument/${instrument}/specification`,
-  );
+  const response = await fetch(`/admin-portal/api/instrument/${instrument}/specification`);
 
   if (!response.ok) {
-    throw new Error("Failed to fetch data");
+    throw new Error('Failed to fetch data');
   }
 
   return JSON.stringify(await response.json());
@@ -35,7 +32,7 @@ export default function TextEditor(props: TextEditorProps) {
     automaticLayout: true,
     formatOnPaste: true,
     // Type 'string' is not assignable to type '"on" | "off" | "wordWrapColumn" | "bounded" | undefined'.
-    wordWrap: "on" as const,
+    wordWrap: 'on' as const,
     scrollBeyondLastLine: false,
   };
 
@@ -48,7 +45,7 @@ export default function TextEditor(props: TextEditorProps) {
       setScheduledChange(true);
       setTimeout(() => {
         // non null check
-        editorRef?.current?.getAction("editor.action.formatDocument")?.run();
+        editorRef?.current?.getAction('editor.action.formatDocument')?.run();
         setScheduledChange(false);
       }, 5000); // 5 second delay
     }
@@ -62,21 +59,19 @@ export default function TextEditor(props: TextEditorProps) {
       props.setSpecification(initialSpecification);
       // Format the initial code on load
       setTimeout(() => {
-        MonacoEditor.getAction("editor.action.formatDocument")?.run();
+        MonacoEditor.getAction('editor.action.formatDocument')?.run();
       }, 100); // Delay to ensure editor is fully loaded
     }
   };
 
   return (
-    <Box sx={{ height: "100%" }}>
-      <MonacoEditor
-        defaultLanguage="json"
-        options={options}
-        onChange={handleChange}
-        onMount={handleEditorDidMount}
-        value={props.specification}
-        // data-cy="SpecificationJSON"
-      />
-    </Box>
+    <MonacoEditor
+      defaultLanguage="json"
+      options={options}
+      onChange={handleChange}
+      onMount={handleEditorDidMount}
+      value={props.specification}
+      // data-cy="SpecificationJSON"
+    />
   );
 }
