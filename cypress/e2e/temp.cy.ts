@@ -39,6 +39,12 @@ describe('E2E Test', () => {
     );
 
     cy.wait(['@getSpecification']).then(() => {
+      cy.get('[data-cy=SpecificationJSON]')
+        .then((SpecificationJSON) => {
+          alert(SpecificationJSON);
+          console.log(SpecificationJSON);
+        })
+        .should('contain.text');
       cy.contains('Submit').click();
       cy.wait(['@putSpecification'], { responseTimeout: 5000 });
     });

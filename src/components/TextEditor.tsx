@@ -5,6 +5,8 @@ import { editor } from 'monaco-editor';
 import { useParams } from 'next/navigation';
 
 interface TextEditorProps {
+  datacy: string;
+  id: string;
   instrument: string;
   specification: string;
   setSpecification: (specification: string) => void;
@@ -69,6 +71,7 @@ export default function TextEditor(props: TextEditorProps) {
       onChange={handleChange}
       onMount={handleEditorDidMount}
       value={props.specification}
+      // data-cy="SpecificationJSON"
     />
   );
 }

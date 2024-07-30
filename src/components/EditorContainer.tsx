@@ -46,7 +46,14 @@ export default function EditorContainer(props: EditorContainerProps) {
           borderTopWidth: 2,
         }}
       />
-      <TextEditor instrument={props.instrument} specification={specification} setSpecification={setSpecification} />
+      <TextEditor
+        data-cy="SpecificationJSON"
+        datacy={'SpecificationJSON'}
+        id={'SpecificationJSON'}
+        instrument={props.instrument}
+        specification={specification}
+        setSpecification={setSpecification}
+      />
     </>
   );
 }
