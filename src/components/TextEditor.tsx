@@ -6,8 +6,6 @@ import { useParams } from 'next/navigation';
 import Box from '@mui/material/Box';
 
 interface TextEditorProps {
-  datacy: string;
-  id: string;
   instrument: string;
   specification: string;
   setSpecification: (specification: string) => void;
@@ -66,7 +64,7 @@ export default function TextEditor(props: TextEditorProps) {
   };
 
   return (
-    <Box sx={{ height: '100%', width: '100%' }}>
+    <Box sx={{ height: '100%', width: '100%' }} data-cy="SpecificationJSON">
       <MonacoEditor
         defaultLanguage="json"
         options={options}

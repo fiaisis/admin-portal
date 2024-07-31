@@ -54,14 +54,7 @@ export default function EditorContainer(props: EditorContainerProps) {
           height: 10,
         }}
       />
-      <TextEditor
-        data-cy="SpecificationJSON"
-        datacy={'SpecificationJSON'}
-        id={'SpecificationJSON'}
-        instrument={props.instrument}
-        specification={specification}
-        setSpecification={setSpecification}
-      />
+      <TextEditor instrument={props.instrument} specification={specification} setSpecification={setSpecification} />
     </Box>
   );
 }
