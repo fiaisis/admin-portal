@@ -14,7 +14,7 @@ export async function GET(request: NextRequest, { params }: { params: { instrume
     });
 
     if (!response.ok) {
-      throw new Error(`Error fetching data: ${response.statusText}`);
+      throw new Error(`Error fetching data: ${response.status}`);
     }
 
     const data = await response.json();
@@ -46,7 +46,7 @@ export async function PUT(request: NextRequest, { params }: { params: { instrume
       cache: 'no-store',
     });
     if (!response.ok) {
-      throw new Error(`Error fetching data: ${response.statusText}`);
+      throw new Error(`Error fetching data: ${response.status}`);
     }
 
     const data = await response.json();

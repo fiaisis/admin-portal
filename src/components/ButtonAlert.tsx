@@ -13,7 +13,7 @@ interface ButtonAlertProps {
 
 export default function ButtonAlert(props: ButtonAlertProps) {
   const [showAlert, setShowAlert] = useState(false);
-  const [alertText, setAlertText] = useState<{ [key: string]: string }>({});
+  const [alertText, setAlertText] = useState<{ [key: string]: number }>({});
 
   const handleClick = async () => {
     const serverResponse = JSON.parse(await props.handleSubmit());
@@ -41,7 +41,7 @@ export default function ButtonAlert(props: ButtonAlertProps) {
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         <Alert
-          severity={alertText['statusText'] == 'OK' ? 'success' : 'error'}
+          severity={alertText['statusCode'] == 200 ? 'success' : 'error'}
           onClose={handleClose}
           data-cy="ButtonAlert"
         >

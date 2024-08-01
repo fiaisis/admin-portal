@@ -23,7 +23,7 @@ export default function EditorContainer(props: EditorContainerProps) {
 
     if (!response.ok) {
       const responseObj = {
-        statusText: response.statusText,
+        statusCode: response.status,
         contents: 'Specification update failed',
       };
 
@@ -31,7 +31,7 @@ export default function EditorContainer(props: EditorContainerProps) {
       return JSON.stringify(responseObj);
     } else {
       const responseObj = {
-        statusText: response.statusText,
+        statusCode: response.status,
         contents: 'Specification updated successfully',
       };
       return JSON.stringify(responseObj);
