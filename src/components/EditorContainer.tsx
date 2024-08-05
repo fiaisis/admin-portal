@@ -5,6 +5,7 @@ import EditorHeader from '@/components/EditorHeader';
 import TextEditor from '@/components/TextEditor';
 import { useState } from 'react';
 import Box from '@mui/material/Box';
+import { BASE_URL } from '../utils/constants';
 
 interface EditorContainerProps {
   instrument: string;
@@ -14,7 +15,7 @@ export default function EditorContainer(props: EditorContainerProps) {
   const [specification, setSpecification] = useState('');
 
   async function updateSpecification() {
-    const response = await fetch(`/admin-portal/api/instrument/${props.instrument}/specification`, {
+    const response = await fetch(`${BASE_URL}/api/instrument/${props.instrument}/specification`, {
       method: 'PUT',
       body: JSON.stringify({
         specification: JSON.parse(specification),

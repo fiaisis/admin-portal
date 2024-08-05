@@ -4,7 +4,7 @@ import MonacoEditor, { OnMount } from '@monaco-editor/react';
 import { editor } from 'monaco-editor';
 import { useParams } from 'next/navigation';
 import Box from '@mui/material/Box';
-
+import { BASE_URL } from '../utils/constants';
 interface TextEditorProps {
   instrument: string;
   specification: string;
@@ -12,7 +12,7 @@ interface TextEditorProps {
 }
 
 async function getSpecification(instrument: string) {
-  const response = await fetch(`/admin-portal/api/instrument/${instrument}/specification`);
+  const response = await fetch(`${BASE_URL}/api/instrument/${instrument}/specification`);
 
   if (!response.ok) {
     throw new Error('Failed to fetch data');

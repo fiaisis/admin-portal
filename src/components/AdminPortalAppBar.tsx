@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Image from 'next/image';
+import { BASE_URL } from '../utils/constants';
 
 export default function AdminPortalAppBar() {
   return (
@@ -12,7 +13,7 @@ export default function AdminPortalAppBar() {
         <Box display="left" justifyContent="flex-start">
           <Toolbar sx={{ padding: '4px', gap: 1 }}>
             <Image
-              src={'/admin-portal/fia-icon-32.png'}
+              src={`${BASE_URL}/fia-icon-32.png`}
               alt="FIA admin portal icon"
               width={50}
               height={50}
