@@ -34,3 +34,15 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Cypress
+
+### Running cypress tests against a local dev server (not local production)
+
+Running Cypress tests for the admin-portal locally will only pass if the NextJS server is started as a dev server `yarn dev` (or `yarn run dev`)
+
+This is because cypress starts a client in development mode. This means that NODE_ENV=development and consequently the BASE_URL (as imported into cypress.config.ts) will be "" (an empty string). So it is expecting to run against a development server.
+
+Attempting to run the cypress tests against a local production server (`yarn build` followed by `yarn start`) will result in failure as the production server expects a BASE_URL of "/admin-portal" but cypress will self configure the test to set BASE_URL to "".
+
+Comments have been included to allow override the logic and temporarily test against a local production server

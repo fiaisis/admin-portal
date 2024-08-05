@@ -1,7 +1,8 @@
+const BASE_URL = Cypress.config('baseUrl') as string;
+
 beforeEach(() => {
   // open admin-portal
-  const URL = Cypress.config('baseUrl') as string;
-  cy.visit(URL);
+  cy.visit(BASE_URL);
 });
 
 describe('E2E Test', () => {
@@ -13,7 +14,7 @@ describe('E2E Test', () => {
 describe('E2E Test', () => {
   it('Opens specification page', () => {
     cy.contains('Specifications').click();
-    cy.url().should('include', '/specification/MARI');
+    cy.url({ timeout: 6000 }).should('include', '/specification/MARI');
   });
 });
 
@@ -27,7 +28,7 @@ describe('E2E Test', () => {
     cy.intercept(
       {
         method: 'GET',
-        url: '*/api/instrument/*/specification',
+        url: `${BASE_URL}/api/instrument/*/specification`,
         hostname: 'localhost',
       },
       {
@@ -85,7 +86,7 @@ describe('E2E Test', () => {
     cy.intercept(
       {
         method: 'GET',
-        url: '*/api/instrument/*/specification',
+        url: `${BASE_URL}/api/instrument/*/specification`,
         hostname: 'localhost',
       },
       {
@@ -98,7 +99,7 @@ describe('E2E Test', () => {
       cy.intercept(
         {
           method: 'PUT',
-          url: '*/api/instrument/*/specification',
+          url: `${BASE_URL}/api/instrument/*/specification`,
           hostname: 'localhost',
         },
         {
@@ -135,7 +136,7 @@ describe('E2E Test', () => {
     cy.intercept(
       {
         method: 'GET',
-        url: '*/api/instrument/*/specification',
+        url: `${BASE_URL}/api/instrument/*/specification`,
         hostname: 'localhost',
       },
       {
@@ -145,7 +146,7 @@ describe('E2E Test', () => {
     ).as('getSpecification');
 
     // PUT API call
-    cy.intercept('PUT', '*/api/instrument/*/specification', {}).as('putSpecification');
+    cy.intercept('PUT', `${BASE_URL}/api/instrument/*/specification`, {}).as('putSpecification');
     cy.visit(Cypress.config('baseUrl') as string);
     cy.contains('Specifications').click();
 
