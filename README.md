@@ -41,8 +41,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 Running Cypress tests for the admin-portal locally will only pass if the NextJS server is started as a dev server `yarn dev` (or `yarn run dev`)
 
-This is because cypress starts a client in development mode. This means that NODE_ENV=development and consequently the BASE_URL (as imported into cypress.config.ts) will be "" (an empty string). So it is expecting to run against a development server.
+This is because cypress starts a client in non-production mode. So it is expecting to run against a development server.
 
-Attempting to run the cypress tests against a local production server (`yarn build` followed by `yarn start`) will result in failure as the production server expects a BASE_URL of "/admin-portal" but cypress will self configure the test to set BASE_URL to "".
+Attempting to run the cypress tests against a local production server (`yarn build` followed by `yarn start`) will result in failure as the production server expects a BASE_URL of "/admin-portal" but cypress will self configure the test to set BASE_URL to "" (via the CI_TEST env var).
 
 Comments have been included to allow override the logic and temporarily test against a local production server

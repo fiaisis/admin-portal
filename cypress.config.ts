@@ -1,9 +1,10 @@
 import { defineConfig } from 'cypress';
-import { BASE_URL } from 'src/utils/constants';
 
-// To test against a production environment replace the import above with comments below
-// const MOCK_PRODUCTION_NODE_ENV = 'production';
-// const BASE_URL = MOCK_PRODUCTION_NODE_ENV !== 'production' ? '' : '/admin-portal';
+// To temporarily test against a LOCAL production environment uncomment below
+// process.env.CI_TEST = 'true';
+
+// If running on CI, NextJS will be running as production and expect "/admin-portal"
+const BASE_URL = process.env.CI_TEST === 'true' ? '/admin-portal' : '';
 
 export default defineConfig({
   e2e: {
