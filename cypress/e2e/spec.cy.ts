@@ -1,6 +1,8 @@
+const BASE_URL = Cypress.config('baseUrl') as string;
+
 beforeEach(() => {
   // open admin-portal
-  cy.visit('/');
+  cy.visit(BASE_URL);
 });
 
 describe('E2E Test', () => {
@@ -12,7 +14,53 @@ describe('E2E Test', () => {
 describe('E2E Test', () => {
   it('Opens specification page', () => {
     cy.contains('Specifications').click();
-    cy.url().should('include', '/specification/MARI');
+    cy.url({ timeout: 6000 }).should('include', '/specification/MARI');
+  });
+});
+
+describe('E2E Test', () => {
+  it('View specification', () => {
+    const specification = { now: false, call: false, term: false };
+    const specificationString = JSON.stringify(specification);
+    // predefine GET Specification API calls to force stubbing of request
+    // https://stackoverflow.com/a/68945338
+    cy.intercept(
+      {
+        method: 'GET',
+        url: `${BASE_URL}/api/instrument/*/specification`,
+        hostname: 'localhost',
+      },
+      {
+        statusCode: 200,
+        body: specification,
+      }
+    ).as('getSpecification');
+
+    cy.visit(Cypress.config('baseUrl') as string);
+    cy.contains('Specifications').click();
+
+    // GET instrument list
+    cy.intercept(
+      {
+        method: 'GET',
+        url: '*/api/instrument/',
+        hostname: 'localhost',
+      },
+      {
+        statusCode: 200,
+        body: specification,
+      }
+    );
+
+    // GET specification, assert it exists
+    cy.wait(['@getSpecification']).then(() => {
+      cy.contains('[data-cy=SpecificationJSON]', specificationString, { timeout: 2000 })
+        .invoke('text')
+        .then((text) => {
+          // trim to remove the code formatted text, and the code line number "1"
+          expect(text.trim().substring(1)).to.equal(specificationString);
+        });
+    });
   });
 });
 
@@ -24,7 +72,7 @@ describe('E2E Test', () => {
     cy.intercept(
       {
         method: 'GET',
-        url: '/api/instrument/',
+        url: '*/api/instrument/',
         hostname: 'localhost',
       },
       {
@@ -37,7 +85,7 @@ describe('E2E Test', () => {
     cy.intercept(
       {
         method: 'GET',
-        url: '/api/instrument/*/specification',
+        url: `${BASE_URL}/api/instrument/*/specification`,
         hostname: 'localhost',
       },
       {
@@ -50,7 +98,7 @@ describe('E2E Test', () => {
       cy.intercept(
         {
           method: 'PUT',
-          url: '/api/instrument/*/specification',
+          url: `${BASE_URL}/api/instrument/*/specification`,
           hostname: 'localhost',
         },
         {
@@ -79,23 +127,25 @@ describe('E2E Test', () => {
 
 describe('E2E Test', () => {
   it('A successful specification update', () => {
+    const specification = { now: false, call: false, term: false };
+    const specificationString = JSON.stringify(specification);
     // predefine GET and PUT Specification API calls to force stubbing of request
     // https://stackoverflow.com/a/68945338
     cy.intercept(
       {
         method: 'GET',
-        url: '/api/instrument/*/specification',
+        url: `${BASE_URL}/api/instrument/*/specification`,
         hostname: 'localhost',
       },
       {
         statusCode: 200,
-        body: { now: false, call: false, term: false },
+        body: specification,
       }
     ).as('getSpecification');
 
     // PUT API call
-    cy.intercept('PUT', '/api/instrument/*/specification', {}).as('putSpecification');
-    cy.visit('http://localhost:3000/admin-portal');
+    cy.intercept('PUT', `${BASE_URL}/api/instrument/*/specification`, {}).as('putSpecification');
+    cy.visit(Cypress.config('baseUrl') as string);
     cy.contains('Specifications').click();
 
     // GET instrument list
@@ -107,11 +157,19 @@ describe('E2E Test', () => {
       },
       {
         statusCode: 200,
-        body: { now: false, call: false, term: false },
+        body: specification,
       }
     );
 
+    // GET specification, assert it exists
     cy.wait(['@getSpecification']).then(() => {
+      cy.contains('[data-cy=SpecificationJSON]', specificationString, { timeout: 2000 })
+        .invoke('text')
+        .then((text) => {
+          // the code formatted text contains line number and newlines
+          expect(text.trim().substring(1)).to.equal(specificationString);
+        });
+
       cy.contains('Submit').click();
       cy.wait(['@putSpecification'], { responseTimeout: 5000 });
     });

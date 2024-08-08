@@ -4,7 +4,7 @@ const DEFAULT_INSTRUMENT = 'MARI';
 
 export default function Home() {
   return (
-    <Container sx={{ display: 'flex', gap: 1, mt: 1, mx: 0 }}>
+    <Container sx={{ display: 'flex', gap: 1, pt: '10vh', mx: 0 }}>
       <Button variant="contained" size="large" href={`/specification/${DEFAULT_INSTRUMENT}`} LinkComponent={Link}>
         Specifications
       </Button>

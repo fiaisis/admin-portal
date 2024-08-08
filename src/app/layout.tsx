@@ -20,8 +20,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={sourceCodeProFont.className}>
       <body>
-        <CssBaseline />
         <AppRouterCacheProvider>
+          <CssBaseline />
           <AdminPortalAppBar />
           {children}
         </AppRouterCacheProvider>

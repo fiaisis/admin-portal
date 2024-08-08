@@ -61,23 +61,18 @@ export default async function SpecificationEditor({ params }: { params: { slug: 
   const instrument = params.slug;
 
   return (
-    <>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          flexDirection: 'row',
-          objectFit: 'contains',
-          height: '75vh',
-        }}
-      >
-        <Box sx={{ flex: 1 }}>
-          <InstrumentList selected={instrument} instruments={instruments} />
-        </Box>
-        <Box sx={{ flex: 7 }}>
-          <EditorContainer instrument={instrument} />
-        </Box>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        height: '95vh',
+        pt: '6vh',
+      }}
+    >
+      <InstrumentList selected={instrument} instruments={instruments} />
+      <Box sx={{ flexGrow: 1, maxWidth: '85%' }}>
+        <EditorContainer instrument={instrument} />
       </Box>
-    </>
+    </Box>
   );
 }

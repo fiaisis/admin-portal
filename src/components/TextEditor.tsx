@@ -3,7 +3,8 @@ import React, { useRef, useState } from 'react';
 import MonacoEditor, { OnMount } from '@monaco-editor/react';
 import { editor } from 'monaco-editor';
 import { useParams } from 'next/navigation';
-
+import Box from '@mui/material/Box';
+import { BASE_URL } from '../utils/constants';
 interface TextEditorProps {
   instrument: string;
   specification: string;
@@ -11,7 +12,7 @@ interface TextEditorProps {
 }
 
 async function getSpecification(instrument: string) {
-  const response = await fetch(`/api/instrument/${instrument}/specification`);
+  const response = await fetch(`${BASE_URL}/api/instrument/${instrument}/specification`);
 
   if (!response.ok) {
     throw new Error('Failed to fetch data');
@@ -63,12 +64,14 @@ export default function TextEditor(props: TextEditorProps) {
   };
 
   return (
-    <MonacoEditor
-      defaultLanguage="json"
-      options={options}
-      onChange={handleChange}
-      onMount={handleEditorDidMount}
-      value={props.specification}
-    />
+    <Box sx={{ height: '100%', width: '100%' }} data-cy="SpecificationJSON">
+      <MonacoEditor
+        defaultLanguage="json"
+        options={options}
+        onChange={handleChange}
+        onMount={handleEditorDidMount}
+        value={props.specification}
+      />
+    </Box>
   );
 }

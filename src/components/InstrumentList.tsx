@@ -16,12 +16,14 @@ export default function InstrumentList(props: InstrumentListProps) {
   return (
     <Paper
       sx={{
-        maxHeight: '90vh',
+        height: '95vh',
         overflow: 'auto',
         bgcolor: 'background.paper',
+        minWidth: '15%',
       }}
     >
       <List
+        sx={{ pt: 2 }}
         subheader={
           <ListSubheader component="div" id="nested-list-subheader">
             Instruments
