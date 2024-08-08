@@ -22,7 +22,6 @@ describe('E2E Test', () => {
   it('View specification', () => {
     const specification = { now: false, call: false, term: false };
     const specificationString = JSON.stringify(specification);
-    console.log(specificationString);
     // predefine GET Specification API calls to force stubbing of request
     // https://stackoverflow.com/a/68945338
     cy.intercept(
@@ -130,7 +129,6 @@ describe('E2E Test', () => {
   it('A successful specification update', () => {
     const specification = { now: false, call: false, term: false };
     const specificationString = JSON.stringify(specification);
-    console.log(specificationString);
     // predefine GET and PUT Specification API calls to force stubbing of request
     // https://stackoverflow.com/a/68945338
     cy.intercept(
