@@ -20,13 +20,11 @@ Clone the repository, and navigate to the root directory of the newly cloned rep
 
 `yarn install` or `yarn --frozen-lockfile`- Installs the required packages
 
-`yarn build`- To build the project
-
 Then you can run the NextJS server using two methods. As a development server (this comes with hot reloading of the server after code changes). Or as a local environment that mimics a production server.
 
 `yarn dev`- To run as dev
 
-`yarn start`- To run as local production
+`yarn build` followed by `yarn start`- To run as local production
 
 ### FIA_API (prerequisite)
 
