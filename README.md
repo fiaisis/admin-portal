@@ -112,6 +112,10 @@ Comments have been included to allow override the logic and temporarily test aga
 
 ## Misc local commands
 
+### Running scorecard (via docker)
+
+`docker run -e GITHUB_AUTH_TOKEN=<github PAT> gcr.io/openssf/scorecard --repo=https://github.com/fiaisis/admin-portal`
+
 ### Formatting code via prettier
 
 `yarn run prettier --config prettierrc.json --check **/*.{js,tsx,ts}` - dry run prettier
